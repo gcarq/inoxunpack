@@ -84,7 +84,7 @@ def unpack_extension(crx_path, target_directory):
         zp.extractall(path=target_directory)
 
     # remove _metadata file
-    shutil.rmtree('{}/_metadata'.format(target_directory))
+    shutil.rmtree('{}/_metadata'.format(target_directory), ignore_errors=True)
 
     manifest_path = '{}/manifest.json'.format(target_directory)
     with open(manifest_path, 'r') as fp:
@@ -171,7 +171,7 @@ def main():
         extension_name = unpack_extension(crx_path, temp_unpacked_path)
 
         # copy extension to final directory
-        target_ext_path = '{}/{}'.format(target_path, extension_id)
+        target_ext_path = '{}{}'.format(target_path, extension_id)
         shutil.rmtree(target_ext_path, ignore_errors=True)
         shutil.copytree(temp_unpacked_path, target_ext_path)
         shutil.rmtree(tempdir)
